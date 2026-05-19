@@ -1,0 +1,33 @@
+# Runtime outputs
+!samples/.gitkeep
+samples/**/state.pkl
+samples/**/output/
+samples/**/preprocess/
+samples/**/data/save_features/
+samples/**/data/gt_depth/
+samples/**/data/measured_depth/
+samples/**/data/mvsanywhere_depth/
+
+# Python cache
+**/__pycache__/
+*.pyc
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.cache/
+lightning_logs/
+wandb/
+build/
+dist/
+*.egg-info/
+
+# Large data and checkpoints
+assets/**
+!assets/pipeline.jpg
+checkpoints/**
+external/**
+*.ckpt
+*.pth
+*.pt
+*.pkl
+*.ply

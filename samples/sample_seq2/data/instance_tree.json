@@ -1,0 +1,455 @@
+{
+  "schema_version": 1,
+  "source": "Precomputed instance-tree artifact for the Clutt3R-Seg source-available release.",
+  "initial": {
+    "initial_idx": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7
+    ],
+    "leaf2inst": [
+      {
+        "frame": 0,
+        "mask": 1,
+        "instance": 1
+      },
+      {
+        "frame": 0,
+        "mask": 2,
+        "instance": 9
+      },
+      {
+        "frame": 0,
+        "mask": 3,
+        "instance": 4
+      },
+      {
+        "frame": 0,
+        "mask": 4,
+        "instance": 2
+      },
+      {
+        "frame": 0,
+        "mask": 5,
+        "instance": 3
+      },
+      {
+        "frame": 0,
+        "mask": 6,
+        "instance": 5
+      },
+      {
+        "frame": 0,
+        "mask": 8,
+        "instance": 0
+      },
+      {
+        "frame": 0,
+        "mask": 9,
+        "instance": 8
+      },
+      {
+        "frame": 1,
+        "mask": 1,
+        "instance": 1
+      },
+      {
+        "frame": 1,
+        "mask": 2,
+        "instance": 9
+      },
+      {
+        "frame": 1,
+        "mask": 3,
+        "instance": 2
+      },
+      {
+        "frame": 1,
+        "mask": 4,
+        "instance": 7
+      },
+      {
+        "frame": 1,
+        "mask": 5,
+        "instance": 5
+      },
+      {
+        "frame": 1,
+        "mask": 6,
+        "instance": 0
+      },
+      {
+        "frame": 1,
+        "mask": 7,
+        "instance": 4
+      },
+      {
+        "frame": 1,
+        "mask": 9,
+        "instance": 6
+      },
+      {
+        "frame": 1,
+        "mask": 10,
+        "instance": 8
+      },
+      {
+        "frame": 2,
+        "mask": 1,
+        "instance": 1
+      },
+      {
+        "frame": 2,
+        "mask": 2,
+        "instance": 9
+      },
+      {
+        "frame": 2,
+        "mask": 3,
+        "instance": 5
+      },
+      {
+        "frame": 2,
+        "mask": 4,
+        "instance": 2
+      },
+      {
+        "frame": 2,
+        "mask": 5,
+        "instance": 4
+      },
+      {
+        "frame": 2,
+        "mask": 6,
+        "instance": 7
+      },
+      {
+        "frame": 2,
+        "mask": 7,
+        "instance": 0
+      },
+      {
+        "frame": 2,
+        "mask": 8,
+        "instance": 8
+      },
+      {
+        "frame": 2,
+        "mask": 9,
+        "instance": 6
+      },
+      {
+        "frame": 3,
+        "mask": 1,
+        "instance": 1
+      },
+      {
+        "frame": 3,
+        "mask": 2,
+        "instance": 9
+      },
+      {
+        "frame": 3,
+        "mask": 3,
+        "instance": 7
+      },
+      {
+        "frame": 3,
+        "mask": 4,
+        "instance": 5
+      },
+      {
+        "frame": 3,
+        "mask": 5,
+        "instance": 4
+      },
+      {
+        "frame": 3,
+        "mask": 7,
+        "instance": 0
+      },
+      {
+        "frame": 3,
+        "mask": 8,
+        "instance": 2
+      },
+      {
+        "frame": 3,
+        "mask": 9,
+        "instance": 8
+      },
+      {
+        "frame": 4,
+        "mask": 1,
+        "instance": 1
+      },
+      {
+        "frame": 4,
+        "mask": 2,
+        "instance": 9
+      },
+      {
+        "frame": 4,
+        "mask": 3,
+        "instance": 5
+      },
+      {
+        "frame": 4,
+        "mask": 4,
+        "instance": 4
+      },
+      {
+        "frame": 4,
+        "mask": 5,
+        "instance": 7
+      },
+      {
+        "frame": 4,
+        "mask": 6,
+        "instance": 0
+      },
+      {
+        "frame": 4,
+        "mask": 9,
+        "instance": 2
+      },
+      {
+        "frame": 4,
+        "mask": 10,
+        "instance": 8
+      },
+      {
+        "frame": 5,
+        "mask": 1,
+        "instance": 1
+      },
+      {
+        "frame": 5,
+        "mask": 3,
+        "instance": 9
+      },
+      {
+        "frame": 5,
+        "mask": 4,
+        "instance": 4
+      },
+      {
+        "frame": 5,
+        "mask": 5,
+        "instance": 5
+      },
+      {
+        "frame": 5,
+        "mask": 6,
+        "instance": 7
+      },
+      {
+        "frame": 5,
+        "mask": 7,
+        "instance": 0
+      },
+      {
+        "frame": 5,
+        "mask": 9,
+        "instance": 2
+      },
+      {
+        "frame": 5,
+        "mask": 11,
+        "instance": 8
+      },
+      {
+        "frame": 6,
+        "mask": 1,
+        "instance": 9
+      },
+      {
+        "frame": 6,
+        "mask": 2,
+        "instance": 1
+      },
+      {
+        "frame": 6,
+        "mask": 3,
+        "instance": 4
+      },
+      {
+        "frame": 6,
+        "mask": 6,
+        "instance": 0
+      },
+      {
+        "frame": 6,
+        "mask": 7,
+        "instance": 5
+      },
+      {
+        "frame": 6,
+        "mask": 9,
+        "instance": 7
+      },
+      {
+        "frame": 6,
+        "mask": 10,
+        "instance": 3
+      },
+      {
+        "frame": 6,
+        "mask": 11,
+        "instance": 2
+      },
+      {
+        "frame": 6,
+        "mask": 12,
+        "instance": 8
+      },
+      {
+        "frame": 7,
+        "mask": 2,
+        "instance": 1
+      },
+      {
+        "frame": 7,
+        "mask": 3,
+        "instance": 7
+      },
+      {
+        "frame": 7,
+        "mask": 4,
+        "instance": 2
+      },
+      {
+        "frame": 7,
+        "mask": 5,
+        "instance": 0
+      },
+      {
+        "frame": 7,
+        "mask": 6,
+        "instance": 5
+      },
+      {
+        "frame": 7,
+        "mask": 9,
+        "instance": 8
+      },
+      {
+        "frame": 7,
+        "mask": 10,
+        "instance": 9
+      },
+      {
+        "frame": 7,
+        "mask": 11,
+        "instance": 4
+      }
+    ],
+    "mean_ground_embedding": null
+  },
+  "updates": {
+    "8": {
+      "leaf_nodes": [
+        {
+          "frame": 8,
+          "mask": 1
+        },
+        {
+          "frame": 8,
+          "mask": 4
+        },
+        {
+          "frame": 8,
+          "mask": 5
+        },
+        {
+          "frame": 8,
+          "mask": 6
+        },
+        {
+          "frame": 8,
+          "mask": 8
+        },
+        {
+          "frame": 8,
+          "mask": 9
+        },
+        {
+          "frame": 8,
+          "mask": 11
+        }
+      ],
+      "parent_of": {
+        "L_08_02": "L_08_10",
+        "L_08_06": "L_08_10",
+        "L_08_09": "L_08_03",
+        "L_08_11": "L_08_02"
+      },
+      "descendant_leaves": {
+        "L_08_02": [
+          "L_08_11"
+        ],
+        "L_08_03": [
+          "L_08_09"
+        ],
+        "L_08_10": [
+          "L_08_06",
+          "L_08_11"
+        ]
+      }
+    },
+    "9": {
+      "leaf_nodes": [
+        {
+          "frame": 9,
+          "mask": 1
+        },
+        {
+          "frame": 9,
+          "mask": 2
+        },
+        {
+          "frame": 9,
+          "mask": 3
+        },
+        {
+          "frame": 9,
+          "mask": 5
+        },
+        {
+          "frame": 9,
+          "mask": 7
+        },
+        {
+          "frame": 9,
+          "mask": 8
+        }
+      ],
+      "parent_of": {
+        "L_09_02": "L_09_06",
+        "L_09_03": "L_09_06",
+        "L_09_04": "L_09_06",
+        "L_09_05": "L_09_06",
+        "L_09_07": "L_09_04",
+        "L_09_08": "L_09_04"
+      },
+      "descendant_leaves": {
+        "L_09_04": [
+          "L_09_07",
+          "L_09_08"
+        ],
+        "L_09_06": [
+          "L_09_02",
+          "L_09_03",
+          "L_09_05",
+          "L_09_07",
+          "L_09_08"
+        ]
+      }
+    }
+  }
+}

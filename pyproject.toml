@@ -1,0 +1,39 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "clutt3r-seg"
+version = "0.1.0"
+description = "Release package for Clutt3R-Seg segmentation and scene update."
+license = { file = "LICENSE" }
+requires-python = ">=3.10"
+classifiers = [
+    "Intended Audience :: Science/Research",
+    "License :: Other/Proprietary License",
+    "Programming Language :: Python :: 3",
+]
+dependencies = [
+    "numpy",
+    "opencv-python",
+    "open3d",
+    "torch",
+    "torchvision",
+    "torchmetrics",
+    "Pillow",
+    "networkx",
+    "pandas",
+    "scipy",
+    "scikit-learn",
+    "joblib",
+    "matplotlib",
+    "huggingface-hub",
+    "lightning",
+    "hydra-core",
+    "omegaconf",
+    "timm",
+    "tqdm",
+]
+
+[tool.setuptools.packages.find]
+include = ["clutt3rseg*"]

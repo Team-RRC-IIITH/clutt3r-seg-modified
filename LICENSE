@@ -1,0 +1,99 @@
+Clutt3R-Seg Non-Commercial Source-Available License
+Version 1.0
+
+Copyright (c) 2026 Clutt3R-Seg Authors. All rights reserved.
+
+This license governs the Clutt3R-Seg source code, documentation, scripts, and
+other materials in this repository, except for third-party software, model
+weights, datasets, generated outputs, and other materials that state a different
+license.
+
+1. Definitions
+
+"Software" means the Clutt3R-Seg materials covered by this license.
+
+"Non-Commercial Purpose" means use solely for academic research, teaching,
+personal study, peer review, reproducibility, or internal evaluation, where the
+use is not intended for commercial advantage, monetary compensation, or the
+benefit of a commercial product, service, or business activity.
+
+"Commercial Purpose" includes, without limitation, use in or for a commercial
+product or service, paid consulting, contract research, commercially sponsored
+research where a commercial entity obtains rights or preferential benefits,
+internal business operations of a commercial entity, model or dataset production
+for commercial use, hosted services, or any activity primarily intended to
+generate revenue or commercial advantage.
+
+2. License Grant
+
+Subject to the terms of this license, the copyright holder grants you a
+non-exclusive, non-transferable, non-sublicensable, revocable license to access,
+use, reproduce, and modify the Software solely for Non-Commercial Purposes.
+
+You may distribute unmodified copies of the Software, or modifications to the
+Software, solely for Non-Commercial Purposes, provided that you:
+
+- include this license and all copyright, patent, trademark, and attribution
+  notices;
+- clearly mark any files that you modified;
+- license your modifications under this same license; and
+- do not represent your modifications as an official release unless authorized
+  in writing by the copyright holder.
+
+3. Restrictions
+
+You may not use, reproduce, modify, distribute, make available, or otherwise
+exploit the Software for any Commercial Purpose without prior written permission
+from the copyright holder.
+
+You may not:
+
+- remove or alter copyright, license, patent, trademark, or attribution notices;
+- sublicense, sell, rent, lease, or provide the Software as a hosted service;
+- use the Software to develop or operate a commercial product, service, model,
+  dataset, benchmark, or workflow;
+- use the Software on behalf of, or for the benefit of, a commercial entity; or
+- use the names, marks, or affiliations of the copyright holder or contributors
+  to endorse or promote derived works without written permission.
+
+4. Patent Rights
+
+No patent license is granted under this license. All patent rights, including
+rights in any patent applications or patents related to the Software, are
+reserved by the copyright holder and other applicable rights holders. The
+Software may be marked "patent pending" where applicable.
+
+5. Third-Party Materials
+
+Third-party software, model weights, datasets, checkpoints, generated outputs,
+and external dependencies are not licensed under this license unless explicitly
+stated. Your use of those materials is governed by their own license terms. You
+are responsible for complying with all applicable third-party licenses.
+
+6. No Warranty
+
+The Software is provided "as is" and "as available", without warranty of any
+kind, whether express, implied, statutory, or otherwise, including without
+limitation warranties of merchantability, fitness for a particular purpose,
+title, non-infringement, accuracy, reliability, or availability.
+
+7. Limitation of Liability
+
+To the maximum extent permitted by law, the copyright holder and contributors
+will not be liable for any claim, damages, or other liability, whether in
+contract, tort, or otherwise, arising from or related to the Software or the use
+of the Software, including any direct, indirect, incidental, special,
+consequential, punitive, or exemplary damages, or any loss of profits, data,
+goodwill, or business opportunity.
+
+8. Termination
+
+Your rights under this license terminate automatically if you violate any term
+of this license. Upon termination, you must stop using the Software and destroy
+all copies in your possession or control, except that sections intended to
+survive termination, including sections 3 through 8, will survive.
+
+9. Additional Permission
+
+For commercial licensing, patent licensing, or other uses not permitted by this
+license, contact the copyright holder.
