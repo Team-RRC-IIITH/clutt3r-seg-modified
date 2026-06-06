@@ -1,4 +1,5 @@
 import heapq
+import json
 from typing import List, Dict, Tuple, Set, Callable
 
 class Node:
@@ -7,6 +8,13 @@ class Node:
         self.frame_id = frame_id
         self.leaf_count = 1
         self.active = True
+        
+        # Tracking the original base leaves: [{'frame': f, 'mask': m}]
+        if mask_id is not None:
+            self.leaves = [{"frame": frame_id, "mask": mask_id}]
+        else:
+            # Super-nodes start empty and are populated during the merge
+            self.leaves = []
         
 class Clutt3RSegClustering:
     def __init__(self, tau_spat: float, tau_sem: float):
@@ -75,6 +83,10 @@ class Clutt3RSegClustering:
         # but for clustering purposes, we just need to track the merged leaf count
         node_w = Node(w, frame_id = -1)
         node_w.leaf_count = node_u.leaf_count + node_v.leaf_count
+        
+        # merge the physical leaf lists
+        node_w.leaves = node_u.leaves + nodes_v.leaves
+        
         self.nodes[w] = node_w
         self.adj[w] = {}
         
@@ -145,3 +157,51 @@ class Clutt3RSegClustering:
         # return active components
         active_nodes = [n_id for n_id, n in self.nodes.items() if n.active]
         return active_nodes
+    
+    def export_to_json(self, output_path: str, per_frame_trees: dict = None):
+        """
+        Exports the final clustered graph to the Clutt3R-Seg instance_tree.json format.
+        
+        Args:
+            output_path: Path to save the JSON file.
+            per_frame_trees: Optional dict containing the input hierarchy 
+                             (parent_of and descendant_leaves) to append to the end.
+        """
+        leaf2inst = []
+        initial_idx = []
+        
+        # filter out deleted nodes, keeping only the final clustered super-nodes
+        active_nodes = [node for node in self.nodes.values() if node.active]
+        
+        # iterate through surviving nodes and assign them a clean, global Instance ID
+        for final_instance_id, node in enumerate(active_nodes):
+            # record the valid global instance IDs
+            initial_idx.append(final_instance_id)
+            
+            # map every base leaf inside this super-node to this final ID
+            for leaf in node.leaves:
+                leaf2inst.append({
+                    "frame": leaf["frame"],
+                    "mask": leaf["mask"],
+                    "instance": final_instance_id
+                })
+                
+        output_schema = {
+            "schema_version": 1,
+            "source": "Custom clustering implementation for instance-tree.",
+            "initial": {
+                "initial_idx": initial_idx,
+                "leaf2inst": leaf2inst
+            }
+        }
+        
+        if per_frame_trees:
+            if "parent_of" in per_frame_trees:
+                output_schema["initial"]["parent_of"] = per_frame_trees["parent_of"]
+            if "descedant_leaves" in per_frame_trees:
+                output_schema["initial"]["descendant_leaves"] = per_frame_trees["descendant_leaves"]
+                
+        with open(output_path, 'w') as f:
+            json.dump(output_schema, f, indent=2) 
+            
+        print(f"Successfully exported {len(initial_idx)} unique instances to {output_path}")
