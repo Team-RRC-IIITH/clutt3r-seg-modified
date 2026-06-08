@@ -1,6 +1,7 @@
 import heapq
 import json
 from typing import List, Dict, Tuple, Set, Callable
+from calculate_similarity import calc_sem_sim, calc_spat_sim 
 
 class Node:
     def __init__(self, node_id: int, frame_id: int):
