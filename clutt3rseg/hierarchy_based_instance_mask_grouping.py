@@ -9,6 +9,7 @@ class Node:
         self.frame_id = frame_id
         self.leaf_count = 1
         self.active = True
+        self.mask_id = mask_id
         
         # Tracking the original base leaves: [{'frame': f, 'mask': m}]
         if mask_id is not None:
@@ -20,7 +21,7 @@ class Node:
 class Clutt3RSegClustering:
     def __init__(self, tau_spat: float, tau_sem: float):
         self.tau_spat = tau_spat
-        self.tau_sem = tau_spat
+        self.tau_sem = tau_sem
         
         self.nodes: Dict[int, Node] = {}
         
@@ -86,7 +87,7 @@ class Clutt3RSegClustering:
         node_w.leaf_count = node_u.leaf_count + node_v.leaf_count
         
         # merge the physical leaf lists
-        node_w.leaves = node_u.leaves + nodes_v.leaves
+        node_w.leaves = node_u.leaves + node_v.leaves
         
         self.nodes[w] = node_w
         self.adj[w] = {}
