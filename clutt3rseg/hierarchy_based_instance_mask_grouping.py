@@ -1,10 +1,10 @@
 import heapq
 import json
 from typing import List, Dict, Tuple, Set, Callable
-from calculate_similarity import calc_sem_sim, calc_spat_sim 
+from calculate_similarity import SensorFeatureStore
 
 class Node:
-    def __init__(self, node_id: int, frame_id: int):
+    def __init__(self, node_id: int, frame_id: int, mask_id: int = None):
         self.node_id = node_id
         self.frame_id = frame_id
         self.leaf_count = 1
@@ -35,15 +35,14 @@ class Clutt3RSegClustering:
         
     def construct_leaf_graph(self, 
                              leaves: List[Tuple[int, int]], # List of (node_id, frame_id)
-                             calc_spat_sim: Callable[[int, int], float],
-                             calc_sem_sim: Callable[[int, int], float]):
+                             feature_store: "SensorFeatureStore"):
         """
         Lines 4-10: build initial leaf graph from frame trees 
         """
         
         # initialize nodes
         for node_id, frame_id in leaves:
-            self.nodes[node_id] = Node(node_id, frame_id)
+            self.nodes[node_id] = Node(node_id, frame_id, mask_id)
             self.adj[node_id] = {}
             self.next_node_id = max(self.next_node_id, node_id) + 1
             
@@ -56,8 +55,8 @@ class Clutt3RSegClustering:
                 
                 # condition : phi(u) != phi(v)
                 if self.nodes[u].frame_id != self.nodes[v].frame_id:
-                    s_splat = calc_spat_sim(u, v)
-                    s_sem = calc_sem_sim(u, v)
+                    s_spat = feature_store.calc_spat_sim(u, v)
+                    s_sem = feature_store.calc_sem_sim(u, v)
                     
                     self._add_edge(u, v, s_splat, s_sem)
                     
