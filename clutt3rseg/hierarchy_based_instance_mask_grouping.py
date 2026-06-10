@@ -94,6 +94,8 @@ class Clutt3RSegClustering:
         # get all unique neighbors of u and v, excluding u and v themselves
         neighbors_u = set(self.adj[u].keys())
         neighbors_v = set(self.adj[v].keys())
+        
+        # set difference operation
         all_neighbors = (neighbors_u | neighbors_v) - {u, v}
         
         for x in all_neighbors:
@@ -112,8 +114,10 @@ class Clutt3RSegClustering:
             self._add_edge(w, x, s_spat_w, s_sem_w)
             
             # clean up old edges pointing to u and v from x
-            if u in self.adj[x]: del self.adj[x][u]
-            if v in self.adj[x]: del self.adj[x][v]
+            if u in self.adj[x]: 
+                del self.adj[x][u]
+            if v in self.adj[x]: 
+                del self.adj[x][v]
             
         # Deactivate u and v
         node_u.active = False
@@ -149,10 +153,10 @@ class Clutt3RSegClustering:
         """
         Lines 11-21: Two-stage similarity grouping
         """
-        # Stage 1: Spatial similarity based grouping
+        # Spatial similarity based grouping
         self._process_stage('spat', self.tau_spat)
         
-        # Stage 2: Semantic similarity based grouping
+        # Semantic similarity based grouping
         self._process_stage('sem', self.tau_sem)
         
         # return active components
