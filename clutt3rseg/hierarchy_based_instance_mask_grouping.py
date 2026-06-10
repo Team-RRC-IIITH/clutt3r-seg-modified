@@ -58,9 +58,9 @@ class Clutt3RSegClustering:
                     s_spat = feature_store.calc_spat_sim(u, v)
                     s_sem = feature_store.calc_sem_sim(u, v)
                     
-                    self._add_edge(u, v, s_splat, s_sem)
+                    self._add_edge(u, v, s_spat, s_sem)
                     
-    def _add_edge(self, u: int, v: int, s_splat: float, s_sem: float):
+    def _add_edge(self, u: int, v: int, s_spat: float, s_sem: float):
         """Helper to safely add edges to adjacency list and push to heaps."""
         self.adj[u][v] = {'spat': s_spat, 'sem': s_sem}
         self.adj[v][u] = {'spat': s_spat, 'sem': s_sem}
