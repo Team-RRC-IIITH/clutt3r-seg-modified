@@ -46,13 +46,12 @@ class DuoduoCLIPBackends:
         return embedding
     
 class GenerateInstanceTreePipeline:
-    def __init__(self, data_root: str, intrinsics: np.ndarray, voxel_size: float = 0.05):
+    def __init__(self, data_root: str, json_meta_path: str, voxel_size: float = 0.05):
         self.data_root = Path(data_root)
-        self.intrinsics = intrinsics # 3x3 Camera Matrix
         self.voxel_size = voxel_size
         
         self.feature_store = SensorFeatureStore(epsilon=1e-6)
-        self.clip_backend = DuoduoCLIPBackend(cache_dir=self.data_root / "clip_cache")
+        self.clip_backend = DuoduoCLIPBackends(cache_dir=self.data_root / "clip_cache")
         
         # Parse the JSON layout to initialize intrinsics and retrieve frame metadata
         self.frames_meta = self._parse_camera_config(json_meta_path)
@@ -61,7 +60,7 @@ class GenerateInstanceTreePipeline:
         self.global_voxel_counts: Dict[int, int] = {}
         self.total_scene_points = 0
         
-    def _parse_camera_config(self, json_path: str) -> List[Dict[str, Any]]:
+    def _parse_camera_config(self, json_path: str) -> List[Dict[str, any]]:
         """Parses transform.json to construct the intrinsic matrix and extract frames metadata."""
         with open(json_path, 'r') as f:
             meta = json.load(f)
@@ -111,7 +110,7 @@ class GenerateInstanceTreePipeline:
         points_world = (t_c2w @ points_hom.T).T[:, :3] # Nx3
         return points_world
     
-    def process_frame_mask(self, frame_meta: Dict[str, Any], mask_filepath: str, global_mask_id: int):
+    def process_frame_mask(self, frame_meta: Dict[str, any], mask_filepath: str, global_mask_id: int):
         """Processes a single mask, projects to global world coordinates, and aggregates data."""
         frame_id, mask_id = self.parse_mask_filename(mask_filepath)
         
