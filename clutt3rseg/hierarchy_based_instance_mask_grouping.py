@@ -34,14 +34,14 @@ class Clutt3RSegClustering:
         self.next_node_id = 0
         
     def construct_leaf_graph(self, 
-                             leaves: List[Tuple[int, int]], # List of (node_id, frame_id)
+                             leaves: List[Tuple[int, int, int]], # List of (node_id, frame_id, maks_id)
                              feature_store: "SensorFeatureStore"):
         """
         Lines 4-10: build initial leaf graph from frame trees 
         """
         
         # initialize nodes
-        for node_id, frame_id in leaves:
+        for node_id, frame_id, mask_id in leaves:
             self.nodes[node_id] = Node(node_id, frame_id, mask_id)
             self.adj[node_id] = {}
             self.next_node_id = max(self.next_node_id, node_id) + 1
