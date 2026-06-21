@@ -3,6 +3,7 @@ import glob
 import re
 import cv2
 import pickle
+import json
 import numpy as np
 from pathlib import Path
 from typing import Tuple, Dict, List
@@ -31,7 +32,7 @@ class DuoduoCLIPBackends:
         cache_path = self.cache_dir / f"clip_{frame_id:06d}_{mask_id:02d}.npy"
         
         if cache_path.exists():
-            return np.load(cache_dir)
+            return np.load(cache_path)
         
         # TODO: Implement actual cropping and inference here
         # e.g., crop = rgb_img[bounding_box] * mask_img
@@ -119,20 +120,38 @@ class GenerateInstanceTreePipeline:
         
         mask_path = self.data_root / f"instance_masks/mask_{frame_id:06d}_{mask_id:02d}.png"
         depth_path = self.data_root / f"depth/depth_{frame_id:06d}.png"
-        rgb_path = self.data_root / f"rgb/image_{frame_id:06d}.png"
+        rgb_path = self.data_root / f"images/image_{frame_id:06d}.png"
+        
+        if not depth_path.exists():
+            print(f"Warning: Missing depth image at {depth_path}. Skipping mask F{frame_id:02d}-M{mask_id:02d}.")
+            return
+        if not rgb_path.exists():
+            print(f"Warning: Missing RGB image at {rgb_path}. Skipping mask F{frame_id:02d}-M{mask_id:02d}.")
+            return
         
         mask_img = cv2.imread(str(mask_path), cv2.IMREAD_GRAYSCALE)
         # Depth is often saved as 16-bit PNG (e.g., millimeters). Convert to meters.
-        depth_img = cv2.imread(str(depth_path), cv2.IMREAD_ANYDEPTH) / 1000.0 
-        rgb_img = cv2.imread(str(rgb_path))
+        raw_depth = cv2.imread(str(depth_path), cv2.IMREAD_ANYDEPTH)
+        if raw_depth is None:
+            print(f"Warning: Failed to read depth image at {depth_path} (corrupted). Skipping mask.")
+            return
+        depth_img = raw_depth / 1000.0
         
+        rgb_img = cv2.imread(str(rgb_path))
+        if rgb_img is None:
+            print(f"Warning: Failed to read RGB image at {rgb_path} (corrupted). Skipping mask.")
+            return
+        
+        # extract visual features
         embedding = self.clip_backend.get_embedding(frame_id, mask_id, rgb_img, mask_img)
         self.feature_store.mask_embeddings[global_mask_id] = embedding
         
+        # Project Points into the Global Scene Frame
         points_3d = self.project_to_3d_world(depth_img, mask_img, t_c2w)
         if len(points_3d) == 0:
             return
         
+        #  Discretize Spatial Structure into Super-Voxels
         voxel_coords = np.floor(points_3d / self.voxel_size)
         voxel_ids = SpatialHasher.hash_coords(voxel_coords)
         
@@ -155,7 +174,7 @@ class GenerateInstanceTreePipeline:
         print(f"Finalizing map with {len(self.global_voxel_counts)} unique super-voxels...")
         
         for v_id, total_pts in self.global_voxel_counts.items():
-            self.feature_store.global_voxel_counts[v_id] = total_pts / self.total_scene_points
+            self.feature_store.global_voxel_weights[v_id] = total_pts / self.total_scene_points
             
         for mask_id, voxel_data in self.feature_store.mask_occupancies.items():
             for v_id, mask_pts in voxel_data.items():
@@ -173,10 +192,14 @@ class GenerateInstanceTreePipeline:
         # This assumes mask_id resets per frame. If it doesn't, you can just use mask_id.
         global_mask_id = 0
         
-        for filepath in mask_files:
-            frame_id, mask_id = self.parse_mask_filename(filepath)
-            self.process_frame_mask(frame_id, mask_id, global_mask_id)
-            global_mask_id += 1
+        for idx, frame_meta in enumerate(self.frames_meta):
+            mask_pattern = str(self.data_root / f"instance_masks/mask_{idx:06d}_*.png")
+            mask_files = glob.glob(mask_pattern)
+            mask_files.sort()
+            
+            for mask_path in mask_files:
+                self.process_frame_mask(frame_meta, mask_path, global_mask_id)
+                global_mask_id += 1
             
         self.finalize_occupancies_and_weights()
         print("Preprocessing complete. SensorFeatureStore populated.")
@@ -184,8 +207,8 @@ class GenerateInstanceTreePipeline:
     
 if __name__ == "__main__":
     pipeline = GenerateInstanceTreePipeline(
-        data_root="samples/sample_seq1/data",
-        json_meta_path="samples/sample_seq1/data/transform.json",
+        data_root="/scratch2/clutt3r-seg-modified/samples/sample_seq2/data",
+        json_meta_path="/scratch2/clutt3r-seg-modified/samples/sample_seq2/data/transforms.json",
         voxel_size=0.05
     )
     
