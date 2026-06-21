@@ -15,7 +15,7 @@ def parse_mask_filename(filepath: str):
     return int(match.group(1)), int(match.group(2))
 
 def main():
-    data_root = Path("samples/sample_seq1/data")
+    data_root = Path("/scratch2/clutt3r-seg-modified/samples/sample_seq2/data")
     feature_store_path = "feature_store_cache.pkl"
     output_json_path = "instance_tree.json"
 
