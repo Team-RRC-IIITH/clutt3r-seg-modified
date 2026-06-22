@@ -5,6 +5,7 @@ import cv2
 import pickle
 import json
 import numpy as np
+import argparse
 from pathlib import Path
 from typing import Tuple, Dict, List
 
@@ -118,9 +119,8 @@ class GenerateInstanceTreePipeline:
         # Use transform_matrix as a numpy float32 array
         t_c2w = np.array(frame_meta['transform_matrix'], dtype=np.float32)
         
-        mask_path = self.data_root / f"instance_masks/mask_{frame_id:06d}_{mask_id:02d}.png"
-        depth_path = self.data_root / f"depth/depth_{frame_id:06d}.png"
-        rgb_path = self.data_root / f"images/image_{frame_id:06d}.png"
+        depth_path = self.data_root / frame_meta['depth_file_path']
+        rgb_path = self.data_root / frame_meta['file_path']
         
         if not depth_path.exists():
             print(f"Warning: Missing depth image at {depth_path}. Skipping mask F{frame_id:02d}-M{mask_id:02d}.")
@@ -129,7 +129,7 @@ class GenerateInstanceTreePipeline:
             print(f"Warning: Missing RGB image at {rgb_path}. Skipping mask F{frame_id:02d}-M{mask_id:02d}.")
             return
         
-        mask_img = cv2.imread(str(mask_path), cv2.IMREAD_GRAYSCALE)
+        mask_img = cv2.imread(str(mask_filepath), cv2.IMREAD_GRAYSCALE)
         # Depth is often saved as 16-bit PNG (e.g., millimeters). Convert to meters.
         raw_depth = cv2.imread(str(depth_path), cv2.IMREAD_ANYDEPTH)
         if raw_depth is None:
@@ -206,15 +206,26 @@ class GenerateInstanceTreePipeline:
         return self.feature_store
     
 if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description="Extract and voxelize 3D features for hierarchical clustering.")
+    parser.add_argument("--data_root", type=str, default="samples/sample_seq1/data",
+                        help="Root directory containing the sequence data")
+    parser.add_argument("--json_meta", type=str, default="samples/sample_seq1/data/transform.json",
+                        help="Path to the transform.json camera config")
+    parser.add_argument("--voxel_size", type=float, default=0.05,
+                        help="Size of the super-voxels in meters (default: 0.05)")
+    parser.add_argument("--output", type=str, default="feature_store_cache.pkl",
+                        help="Output path for the serialized SensorFeatureStore")
+    
+    args = parser.parse_args()
+
     pipeline = GenerateInstanceTreePipeline(
-        data_root="/scratch2/clutt3r-seg-modified/samples/sample_seq2/data",
-        json_meta_path="/scratch2/clutt3r-seg-modified/samples/sample_seq2/data/transforms.json",
-        voxel_size=0.05
+        data_root=args.data_root,
+        json_meta_path=args.json_meta,
+        voxel_size=args.voxel_size
     )
     
     populated_store = pipeline.run()
     
-    output_path = "feature_store_cache.pkl"
-    with open(output_path, 'wb') as f:
+    with open(args.output, 'wb') as f:
         pickle.dump(populated_store, f)
-    print(f"Saved populated global coordinate SensorFeatureStore to {output_path}")
+    print(f"Saved populated global coordinate SensorFeatureStore to {args.output}")
